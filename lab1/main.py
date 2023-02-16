@@ -68,7 +68,6 @@ namespace HelloWorldApp {
 def main(value: int):
     print("main lab 1")
     # create source file 
-    # create source file 
     gen_txt(value)
     gen_py(value)
     gen_c(value)

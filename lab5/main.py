@@ -45,22 +45,35 @@ def MC_2_MCT():
 
 
 def validateMC(input: list, lineNUM):
-    #! ERROR CHECK LEVEL OF OPERATION IS SUPPORT OR NOT IF SELECT FUNCTION 0, 1, 5, 6, 7
-    #! ERROR CHECK OPERATION IF SELECT FUNCTION 7
+    #TODO: ERROR CHECK LEVEL OF OPERATION IS SUPPORT OR NOT IF SELECT FUNCTION 0, 1, 5, 6, 7
+    #TODO: ERROR CHECK OPERATION IF SELECT FUNCTION 7
     errMessage=""
+    functionNumber = int(input[0])
+    levelNumber = int(input[1])
+    valueNumber = int(input[0])
+
     try:
-        if(int(input[0]) > 3 ):
-            errMessage = f"The function does not support level [{input[0]}]"
+        # validate data range
+        if(functionNumber > 3 ):
+            errMessage = f"Invalid function [{input[0]}]"
             
-        if(int(input[1]) > 2 ):
+        if(levelNumber > 2 ):
             errMessage = f"Invalid level [{input[1]}]"
-        if(int(input[2]) > 11 ):
+        if(valueNumber > 11 ):
             errMessage = f"Invalid value [{input[2]}]"
+
+        # validateCondition
+        if(str(functionNumber) in "01567" ):
+            if(levelNumber != 0):
+                errMessage = f"The function does not support level [{levelNumber}]"
+        elif (str(functionNumber) in "7"):
+            if(valueNumber > 7 ):
+                errMessage = f"Invalid operation [{input[2]}]"
 
         if(errMessage != ""):
             raise ValueError(f"Line {lineNUM}: {errMessage}")
     except:
-         raise ValueError(f"Line {lineNUM}:  Invalid operation ")
+         raise ValueError(f"Line {lineNUM}:  ERROR ")
 
 def disassembler(inputs: list):
     functionDisassembler = {

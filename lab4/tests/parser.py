@@ -5,7 +5,7 @@ sys.path.append('../../')
 import pytest
 
 # from lab4 import main
-from lab4.TEACHER_parser import arith_expr
+# from lab4.TEACHER_parser import arith_expr
 """Test cases for parser analyzer."""
 
 

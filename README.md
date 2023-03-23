@@ -56,15 +56,6 @@
  ┃ ┃ ┗ 📜__init__.py
  ┃ ┣ 📂tests
  ┃ ┃ ┣ 📂machine
- ┃ ┃ ┃ ┣ 📂.pytest_cache
- ┃ ┃ ┃ ┃ ┣ 📂v
- ┃ ┃ ┃ ┃ ┃ ┗ 📂cache
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜lastfailed
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜nodeids
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜stepwise
- ┃ ┃ ┃ ┃ ┣ 📜.gitignore
- ┃ ┃ ┃ ┃ ┣ 📜CACHEDIR.TAG
- ┃ ┃ ┃ ┃ ┗ 📜README.md
  ┃ ┃ ┃ ┣ 📜test_pcode_machine.py
  ┃ ┃ ┃ ┗ 📜__init__.py
  ┃ ┃ ┗ 📜__init__.py
@@ -82,6 +73,6 @@
 ## NOTE
 
 [Readme](https://readme.so/editor)
-[Readme](https://readme.so/editor)
+[File Tree](https://marketplace.visualstudio.com/items?itemName=Shinotatwu-DS.file-tree-generator)
 
 > python -m pytest <FILENAME.py>

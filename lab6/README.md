@@ -1,2 +1,3 @@
-# to create emulators
-Base on P-code machine
+
+# lab 6
+## Lab-06 Create emulators base on P-code machine

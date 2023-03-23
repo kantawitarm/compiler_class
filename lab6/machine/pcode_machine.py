@@ -109,90 +109,96 @@ class PCodeMachineEmulator:
         for index, value in enumerate(list_of_pcode):
             self.instruction_memory[index] = value
 
-    def step(self, function, constant, operator:int=0):
+    def step(self, function, level, constant):
         """Execute one instruction."""
         if(function == "lit"):
             self.top_of_stack +=1
             self.data_memory[self.top_of_stack] = constant
             pass
+
         elif(function == "opr"):
+            # case a of {operator}
+            # opr 0, a  : execute operation a (13 operations: RETURN, 5 math functions, and 7 comparison functions)
+            operator = constant
             if(operator == 0):
                 # t := b - 1; p := s[t + 3]; b := s[t + 2];
                 self.top_of_stack = self.base_pointer -1
                 self.program_counter = self.data_memory[self.top_of_stack +3]
                 self.base_pointer = self.data_memory[self.top_of_stack +2]
                 pass
-            elif (operator == 1):
+            elif (operator == 1): #TODO: flip + -> - , - -> +
                 # 1: s[t] := -s[t];
                 self.data_memory[self.top_of_stack] = -self.data_memory[self.top_of_stack]
                 pass
-            elif (operator == 2):
+            elif (operator == 2): #TODO: ADD
                 # 2: begin t := t - 1; s[t] := s[t] + s[t + 1] end;
                 self.top_of_stack -= 1
                 self.data_memory[self.top_of_stack] = self.data_memory[self.top_of_stack] + self.data_memory[self.top_of_stack + 1]
                 pass
-            elif (operator == 3):
+            elif (operator == 3): #TODO: SUB
                 # 3: begin t := t - 1; s[t] := s[t] - s[t + 1] end;
                 self.top_of_stack -= 1
                 self.data_memory[self.top_of_stack] = self.data_memory[self.top_of_stack] - self.data_memory[self.top_of_stack + 1]
                 pass
-            elif (operator == 4):
+            elif (operator == 4): #TODO: MUL
                 # 4: begin t := t - 1; s[t] := s[t] * s[t + 1] end;
                 self.top_of_stack -= 1
                 self.data_memory[self.top_of_stack] = self.data_memory[self.top_of_stack]  * self.data_memory[self.top_of_stack + 1] 
                 pass
-            elif (operator == 5):
+            elif (operator == 5): #TODO: DIV
                 # 5: begin t := t - 1; s[t] := s[t] div s[t + 1] end;
                 self.top_of_stack -= 1
                 self.data_memory[self.top_of_stack] = self.data_memory[self.top_of_stack] / self.data_memory[self.top_of_stack+1]
                 pass
-            elif (operator == 6):
+            elif (operator == 6): #TODO: flip + -> - , - -> +
                 # 6: s[t] := ord(odd(s[t]));
-                # ord() Return the integer that represents
-                self.data_memory = bool(odd(self.data_memory[self.top_of_stack])) #! odd meaning ?
+                # TODO: CHECK IS ODD NUMBER
+                self.data_memory = bool((self.data_memory[self.top_of_stack]) %2 == 0)
                 pass
-            elif (operator == 8):
+            elif (operator == 8): #TODO: EQU
                 # 8: begin t := t - 1; s[t] := ord(s[t] = s[t + 1]) end;
                 self.top_of_stack -= 1
                 self.data_memory[self.top_of_stack] = bool(self.data_memory[self.top_of_stack] == self.data_memory[self.top_of_stack+1])
                 pass
-            elif (operator == 9):
+            elif (operator == 9): #TODO: NEQ
                 # 9: begin t := t - 1; s[t] := ord(s[t] <> s[t + 1]) end;
                 self.top_of_stack -= 1
                 self.data_memory[self.top_of_stack] = bool(self.data_memory[self.top_of_stack] != self.data_memory[self.top_of_stack+1])
                 pass
-            elif (operator == 10):
+            elif (operator == 10): #TODO: LSS
                 # 10: begin t := t - 1; s[t] := ord(s[t] < s[t + 1]) end;
                 self.top_of_stack -= 1
                 self.data_memory[self.top_of_stack] = bool(self.data_memory[self.top_of_stack] < self.data_memory[self.top_of_stack+1])
                 pass
-            elif (operator == 11):
+            elif (operator == 11): #TODO: GEQ
                 # 11: begin t := t - 1; s[t] := ord(s[t] >= s[t + 1]) end;
                 self.top_of_stack -= 1
                 self.data_memory[self.top_of_stack] = bool(self.data_memory[self.top_of_stack] >= self.data_memory[self.top_of_stack+1])
                 pass
-            elif (operator == 12):
+            elif (operator == 12): #TODO: GTR
                 # 12: begin t := t - 1; s[t] := ord(s[t] > s[t + 1]) end;
                 self.top_of_stack -= 1
                 self.data_memory[self.top_of_stack] = bool(self.data_memory[self.top_of_stack] > self.data_memory[self.top_of_stack+1])
                 pass
-            elif (operator == 13):
+            elif (operator == 13): #TODO: LEQ
                 # 13: begin t := t - 1; s[t] := ord(s[t] <= s[t + 1]) end;
                 self.top_of_stack -= 1
                 self.data_memory[self.top_of_stack] = bool(self.data_memory[self.top_of_stack] <= self.data_memory[self.top_of_stack+1])
                 pass
             pass
         elif(function == "lod"):
+            # lod: begin t := t + 1; s[t] := s[base(l) + a] end;
+            # DEFAULT_INSTRUCTION
             self.top_of_stack +=1
-            self.data_memory[self.top_of_stack] = self.data_memory[self.base(l) + constant] #! what is L 
+            self.data_memory[self.top_of_stack] = self.data_memory[self.base(level) + constant]
             pass
         elif(function == "sto"):
-            self.data_memory[self.base(l) + constant] = self.data_memory[self.top_of_stack]
+            self.data_memory[self.base(level) + constant] = self.data_memory[self.top_of_stack]
             print(self.data_memory[self.top_of_stack], end ="\n")
             self.top_of_stack -= 1
             pass
         elif(function == "cal"):
-            self.data_memory[self.top_of_stack + 1] = self.base(l)
+            self.data_memory[self.top_of_stack + 1] = self.base(level)
             self.data_memory[self.top_of_stack + 2] = self.base_pointer
             self.data_memory[self.top_of_stack + 3] = self.program_counter
             self.base_pointer = self.top_of_stack +1 
@@ -217,7 +223,6 @@ class PCodeMachineEmulator:
             self.program_counter += 1
             # (0, 0, 0)
             # F L C
-
             self.step(value[0], value[2], value[1])
 
     # TODO: ------------------------
